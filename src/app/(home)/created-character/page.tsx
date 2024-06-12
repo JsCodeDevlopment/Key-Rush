@@ -7,6 +7,7 @@ export default function CreateCharacter() {
       <h1 className="text-[#ff3434] text-3xl font-bold">
         ESCOLHA SEU PERSONAGEM
       </h1>
+      <p className="text-[#7d7373] text-lg">Escolha um personagem já criado anteriormente ou crie um novo personagem para jogar.</p>
       <article className="flex w-full gap-3 p-5 flex-wrap items-center justify-center">
         <Link href={"/create-character"}>
           <div className="flex items-center justify-center w-40 h-[13.5rem] bg-[#ff3434] rounded-md">
