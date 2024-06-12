@@ -1,17 +1,18 @@
+import { Footer } from "@/components/footer";
+import { Header } from "@/components/header";
+
 export default function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <>
-    <header>
-      <h1>Header</h1>
-    </header>
-      <main>{children}</main>
-      <footer>
-        <h1>Footer</h1>
-      </footer>
-    </>
+    <main className="flex flex-col relative bg-[#111111] bg-hero bg-cover bg-blend-overlay w-full min-h-screen">
+      <Header />
+      <section className="flex p-20">
+        {children}
+      </section>
+      <Footer />
+    </main>
   );
 }
