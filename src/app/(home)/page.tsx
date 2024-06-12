@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import image from "@/assets/images/letter.png";
 import { Button } from "@/components/ui/button";
 
@@ -26,9 +27,11 @@ export default function Home() {
           você tem os dedos mais rápidos!
         </p>
         <div>
-          <Button className="bg-[#ff3434] hover:bg-zinc-800" size={"lg"}>
-            Start Now!
-          </Button>
+          <Link href="/created-character">
+            <Button className="bg-[#ff3434] hover:bg-zinc-800" size={"lg"}>
+              Start Now!
+            </Button>
+          </Link>
         </div>
       </article>
     </section>

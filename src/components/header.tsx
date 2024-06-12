@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import menu from "@/assets/svg/menu.svg";
 import cancel from "@/assets/svg/cancel.svg";
 import {
@@ -15,7 +16,9 @@ import { useState } from "react";
 export function Header() {
   return (
     <nav className="flex w-full items-center justify-between py-5 px-20">
-      <h1 className="text-[#ff3434] text-3xl font-black">KEY RUSH</h1>
+      <Link href={"/"}>
+        <h1 className="text-[#ff3434] text-3xl font-black">KEY RUSH</h1>
+      </Link>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Image

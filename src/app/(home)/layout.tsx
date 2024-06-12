@@ -7,9 +7,9 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className="flex flex-col relative bg-[#111111] bg-hero bg-cover bg-blend-overlay w-full min-h-screen">
+    <main className="flex flex-col relative pb-2 bg-[#111111] bg-hero bg-contain bg-center bg-no-repeat bg-blend-overlay w-full min-h-screen">
       <Header />
-      <section className="flex p-20">
+      <section className="flex flex-1 p-20">
         {children}
       </section>
       <Footer />
