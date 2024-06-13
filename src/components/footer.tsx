@@ -1,4 +1,4 @@
-import { useSocialLinks } from "@/helpers/social-links";
+import { useSocialLinks } from "@/helpers/mocks/social-links";
 import Image from "next/image";
 
 export function Footer() {
