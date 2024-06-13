@@ -6,53 +6,95 @@ import { Points } from "@/components/points";
 import { Keys } from "@/components/keys";
 import { CountDownTimer } from "@/components/countdown-timer";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
-import { GenerateSequence } from "@/helpers/generate-sequence";
+import { useCallback, useEffect, useState } from "react";
 
 export default function Game() {
-  const [started, setStarded] = useState<boolean>(false);
+  const [started, setStarted] = useState<boolean>(false);
+  const [gameOver, setGameOver] = useState<boolean>(false);
 
   const [timeLeft, setTimeLeft] = useState<number>(60);
-  const [gameInterval, setGameInterval] = useState<NodeJS.Timeout | number>(0);
   const [score, setScore] = useState<number>(0);
   const [combo, setCombo] = useState<number>(0);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [currenSequence, setCurrentSequence] = useState<number[]>([]);
+  const [currentSequence, setCurrentSequence] = useState<string[]>([]);
+  const [gameOverMessage, setGameOverMessage] = useState<string>("");
+  const [hasError, setHasError] = useState<boolean>(false);
 
-  // const { sequence } = GenerateSequence();
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (timeLeft > 0 && started) {
+      interval = setInterval(() => {
+        setTimeLeft((prevTime) => prevTime - 1);
+      }, 1000);
+    } else if (timeLeft === 0) {
+      endGame("Time is up! ");
+    }
+    return () => clearInterval(interval);
+  }, [timeLeft, started]);
 
   const startGame = () => {
-    setStarded(true);
-
-    const interval = setInterval(() => {
-      setTimeLeft((prevTimeLeft) => prevTimeLeft - 1);
-    }, 1000);
-    setGameInterval(interval);
+    setScore(0);
+    setCombo(0);
+    setTimeLeft(60);
+    setCurrentIndex(0);
+    setCurrentSequence(generateSequence());
+    setGameOverMessage("");
+    setHasError(false);
+    setStarted(true);
+    setGameOver(false);
+    window.addEventListener("keydown", handleKeyPress);
   };
 
   const endGame = (message: string) => {
-    if (gameInterval) {
-      clearInterval(gameInterval);
-      setGameInterval(0);
-      console.log(message);
-    }
+    window.removeEventListener("keydown", handleKeyPress);
+    setStarted(false);
+    setGameOver(true);
+    setGameOverMessage(`${message}Your Score: ${score}, Your Combo: ${combo}`);
   };
 
-  useEffect(() => {
-    return () => {
-      if (gameInterval) {
-        clearInterval(gameInterval);
+  const resetGame = () => {
+    setGameOver(false);
+    setGameOverMessage("");
+  };
+
+  const generateSequence = () => {
+    const letters = "abcdefghijklmnopqrstuvwxyzç";
+    let sequence = [];
+    for (let i = 0; i < 6; i++) {
+      const randomIndex = Math.floor(Math.random() * letters.length);
+      sequence.push(letters[randomIndex]);
+    }
+    return sequence;
+  };
+
+  const handleKeyPress = useCallback(
+    (event: KeyboardEvent) => {
+      const keyPressed = event.key.toLowerCase();
+      if (keyPressed === currentSequence[currentIndex]) {
+        setScore((prevScore) => prevScore + 25);
+        setCombo((prevCombo) => prevCombo + 1);
+        setCurrentIndex((prevIndex) => prevIndex + 1);
+        setHasError(false);
+        if (currentIndex >= currentSequence.length - 1) {
+          setCurrentSequence(generateSequence());
+          setCurrentIndex(0);
+        }
+      } else {
+        setHasError(true);
+        endGame("You pressed the wrong key! ");
       }
-    };
-  }, []);
+    },
+    [currentSequence, currentIndex]
+  );
 
   useEffect(() => {
-    if (timeLeft <= 0) {
-      setTimeLeft(60);
-      setStarded(false);
-      endGame("Time is up!");
+    if (started) {
+      window.addEventListener("keydown", handleKeyPress);
     }
-  }, [timeLeft, endGame]);
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [started, handleKeyPress]);
 
   return (
     <section className="flex flex-col relative w-full gap-5 bg-[#7d7373]/30 border border-[#ff3434] p-5 rounded-lg items-center">
@@ -69,22 +111,46 @@ export default function Game() {
         />
         <p className="text-[#111111]">Fire Hands</p>
       </div>
-      {!started ? (
+      {started ? (
+        <>
+          <Points combo={combo} points={score} />
+          <Keys
+            currentIndex={currentIndex}
+            hasError={hasError}
+            sequence={currentSequence}
+          />
+          <CountDownTimer timeLeft={timeLeft} />
+        </>
+      ) : gameOver ? (
+        <>
+          {hasError && (
+            <Keys
+              currentIndex={currentIndex}
+              hasError={hasError}
+              sequence={currentSequence}
+            />
+          )}
+          <div id="end-message" style={{ color: "red" }}>
+            {gameOverMessage}
+          </div>
+          <Button
+            onClick={resetGame}
+            size={"lg"}
+            className="bg-[#ff3434] hover:scale-125 animate-bounce w-48 h-20 text-xl"
+          >
+            JOGAR DE NOVO
+          </Button>
+        </>
+      ) : (
         <div className="flex h-full items-center justify-center">
           <Button
-          onClick={() => startGame()}
+            onClick={startGame}
             size={"lg"}
             className="bg-[#ff3434] hover:scale-125 animate-bounce w-48 h-20 text-xl"
           >
             COMEÇAR
           </Button>
         </div>
-      ) : (
-        <>
-          <Points />
-          <Keys />
-          <CountDownTimer timeLeft={timeLeft} />
-        </>
       )}
     </section>
   );

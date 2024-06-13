@@ -1,24 +1,34 @@
-export function Keys() {
+interface IKeys {
+  sequence: string[];
+  currentIndex: number;
+  hasError: boolean;
+}
+
+export function Keys({ sequence, currentIndex, hasError }: IKeys) {
   return (
     <article className="flex w-full gap-3 p-5 flex-wrap items-center justify-center">
-      <div className="flex items-center justify-center w-16 h-16 rounded-md bg-[#7d7373] border border-[#ff3434]">
-        <p className="text-white text-5xl font-bold">G</p>
-      </div>
-      <div className="flex items-center justify-center w-16 h-16 rounded-md bg-[#11111] border border-[#ff3434]">
-        <p className="text-[#ff3434] text-5xl font-bold">E</p>
-      </div>
-      <div className="flex items-center justify-center w-16 h-16 rounded-md bg-[#ff3434] border border-white">
-        <p className="text-[#111111] text-5xl font-bold">X</p>
-      </div>
-      <div className="flex items-center justify-center w-16 h-16 rounded-md bg-[#7d7373] border border-[#ff3434]">
-        <p className="text-white text-5xl font-bold">Q</p>
-      </div>
-      <div className="flex items-center justify-center w-16 h-16 rounded-md bg-[#7d7373] border border-[#ff3434]">
-        <p className="text-white text-5xl font-bold">Ç</p>
-      </div>
-      <div className="flex items-center justify-center w-16 h-16 rounded-md bg-[#7d7373] border border-[#ff3434]">
-        <p className="text-white text-5xl font-bold">V</p>
-      </div>
+      {sequence.map((key, index) => {
+        let itemClassName =
+          "flex items-center justify-center w-16 h-16 rounded-md";
+        let textClassName = "text-5xl font-bold";
+
+        if (index < currentIndex) {
+          itemClassName += " bg-[#111111] border border-[#ff3434]";
+          textClassName += " text-[#ff3434]";
+        } else if (index === currentIndex && hasError) {
+          itemClassName += " bg-[#ff3434] border border-white";
+          textClassName += " text-[#111111]";
+        } else {
+          itemClassName += " bg-[#7d7373] border border-[#ff3434]";
+          textClassName += " text-white";
+        }
+
+        return (
+          <div key={index} className={itemClassName}>
+            <p className={textClassName}>{key.toUpperCase()}</p>
+          </div>
+        );
+      })}
     </article>
   );
 }
