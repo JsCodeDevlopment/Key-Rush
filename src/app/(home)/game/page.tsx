@@ -93,7 +93,14 @@ export default function Game() {
         endGame("You pressed the wrong key! ");
       }
     },
-    [currentSequence, currentIndex, userInput, combo, playCorrectSound, playWrongSound]
+    [
+      currentSequence,
+      currentIndex,
+      userInput,
+      combo,
+      playCorrectSound,
+      playWrongSound,
+    ]
   );
 
   useEffect(() => {
@@ -106,19 +113,31 @@ export default function Game() {
   }, [started, handleKeyPress]);
 
   return (
-    <section className="flex flex-col relative w-full gap-5 bg-[#7d7373]/30 border border-[#ff3434] p-5 rounded-lg items-center">
+    <section className="flex flex-col relative w-full gap-2 bg-zinc-800/30 border border-[#ff3434] p-5 rounded-lg items-center">
       <h1 className="text-[#ff3434] text-3xl font-bold">
-        {!started ? "HORA DA VERDADE" : "APERTE EM COMEÇAR PARA JOGAR"}
+        {!started
+          ? "HORA DA VERDADE!"
+          : gameOver
+          ? "APERTE EM COMEÇAR PARA JOGAR"
+          : "VAMOS LÁ!"}
       </h1>
-      <div className="flex flex-col items-center p-2 bg-[#ff3434] rounded-md">
-        <Image
-          src={male0}
-          className="w-36"
-          width={200}
-          height={200}
-          alt="character1"
-        />
-        <p className="text-[#111111]">Fire Hands</p>
+      <p className="text-white text-lg">
+        {!started
+          ? "Aperte em começar e comece a fazer pontuações insanas."
+          : "Se está pronto, então inicie e mostre que é bom de verdade."}
+      </p>
+      <div className="absolute left-5 flex flex-col items-center justify-center">
+        <p className="text-[#ff3434]">Personagem Escolhido</p>
+        <div className="flex flex-col h-48 w-32 items-center justify-between p-2 bg-[#ff3434] rounded-md">
+          <Image
+            src={male0}
+            className="w-36"
+            width={200}
+            height={200}
+            alt="character1"
+          />
+          <p className="text-white">Fire Hands</p>
+        </div>
       </div>
       {started ? (
         <>
@@ -129,11 +148,7 @@ export default function Game() {
             sequence={currentSequence}
           />
           <CountDownTimer timeLeft={timeLeft} />
-          <Button
-            onClick={startGame}
-            size={"sm"}
-            className="bg-[#ff3434]"
-          >
+          <Button onClick={startGame} size={"sm"} className="bg-[#ff3434]">
             Começar Novamente
           </Button>
         </>
@@ -151,8 +166,7 @@ export default function Game() {
           </div>
           <Button
             onClick={resetGame}
-            size={"lg"}
-            className="bg-[#ff3434] hover:scale-125 animate-bounce w-48 h-20 text-xl"
+            className="bg-[#ff3434] hover:scale-125 animate-bounce text-lg"
           >
             JOGAR DE NOVO
           </Button>
@@ -161,8 +175,7 @@ export default function Game() {
         <div className="flex h-full items-center justify-center">
           <Button
             onClick={startGame}
-            size={"lg"}
-            className="bg-[#ff3434] hover:scale-125 animate-bounce w-48 h-20 text-xl"
+            className="bg-[#ff3434] hover:scale-125 text-white animate-bounce text-lg"
           >
             COMEÇAR
           </Button>

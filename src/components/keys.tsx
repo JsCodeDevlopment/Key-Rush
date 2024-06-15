@@ -19,7 +19,7 @@ export function Keys({ sequence, currentIndex, hasError }: IKeys) {
           itemClassName += " bg-[#ff3434] border border-white";
           textClassName += " text-[#111111]";
         } else {
-          itemClassName += " bg-[#7d7373] border border-[#ff3434]";
+          itemClassName += " bg-zinc-800 border border-[#ff3434]";
           textClassName += " text-white";
         }
 
