@@ -8,7 +8,7 @@ interface IKeys {
   hasError: boolean;
 }
 
-export function Keys({ sequence, currentIndex, userInput }: IKeys) {
+export function Keys({ sequence, currentIndex, userInput, hasError }: IKeys) {
   useEffect(() => {
     if (currentIndex < sequence.length) {
       const currentElement = document.getElementById(`letter-${currentIndex}`);
@@ -22,6 +22,7 @@ export function Keys({ sequence, currentIndex, userInput }: IKeys) {
       }
     }
   }, [currentIndex]);
+
   return (
     <article className="flex w-full gap-3 p-5 flex-wrap items-center justify-center">
       {sequence.map((key, index) => (
@@ -32,7 +33,8 @@ export function Keys({ sequence, currentIndex, userInput }: IKeys) {
             index,
             currentIndex,
             userInput,
-            sequence
+            sequence,
+            hasError
           )}`}
         >
           <p className="text-5xl font-bold">{key.toUpperCase()}</p>
