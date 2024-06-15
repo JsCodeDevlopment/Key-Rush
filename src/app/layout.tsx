@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./styles/globals.css";
+import { AudioProvider } from "@/context/AudioContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,8 +16,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-br" className="scrollbar-thin scrollbar-track-neutral-700 scrollbar-thumb-[#ff3434]">
-      <body className={inter.className}>{children}</body>
+    <html
+      lang="pt-br"
+      className="scrollbar-thin scrollbar-track-neutral-700 scrollbar-thumb-[#ff3434]"
+    >
+      <AudioProvider>
+        <body className={inter.className}>{children}</body>
+      </AudioProvider>
     </html>
   );
 }
