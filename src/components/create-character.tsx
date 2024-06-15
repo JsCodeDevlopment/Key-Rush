@@ -24,17 +24,17 @@ export function CreateCharacterForm() {
   return (
     <Card className="w-[350px] bg-[#111111] border-[#ff3434]">
       <CardHeader>
-        <CardDescription>
+        <CardDescription className="text-zinc-500">
           Crie um personagem que lhe represente em sua jogatina.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form className="text-white">
           <div className="grid w-full items-center gap-4">
-            <div className="flex flex-col items-center p-2 bg-[#ff3434] rounded-md">
+            <div className="flex flex-col items-center justify-center h-32 w-full p-2 bg-[#ff3434] rounded-md">
               <Image
                 src={male0}
-                className="w-36"
+                className="w-24"
                 width={200}
                 height={200}
                 alt="character1"
@@ -46,7 +46,7 @@ export function CreateCharacterForm() {
             </div>
             <div className="flex w-full items-center justify-between">
               <p>Masculino</p>
-              <Switch />
+              <Switch className="bg-[#ff3434]" />
               <p>Feminino</p>
             </div>
             <div className="flex flex-col space-y-1.5">
