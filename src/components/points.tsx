@@ -5,7 +5,7 @@ interface PointsProps {
 
 export function Points({ points, combo }: PointsProps) {
   return (
-    <div className="flex flex-col gap-3 absolute w-64 bg-zinc-950 p-3 right-5 border border-[#ff3434]">
+    <div className="flex flex-col gap-3 w-64 bg-zinc-950 p-3 border border-[#ff3434]">
       <div className="flex flex-col p-2 bg-[#111111] text-white">
         <div className="flex items-center justify-center">
           <p className="text-[#ff3434] text-3xl font-bold">Recorde</p>
