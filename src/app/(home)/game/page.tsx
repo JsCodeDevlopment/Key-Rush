@@ -143,6 +143,7 @@ export default function Game() {
         <>
           <Points combo={combo} points={score} />
           <Keys
+            userInput={userInput}
             currentIndex={currentIndex}
             hasError={hasError}
             sequence={currentSequence}
@@ -156,6 +157,7 @@ export default function Game() {
         <>
           {hasError && (
             <Keys
+              userInput={userInput}
               currentIndex={currentIndex}
               hasError={hasError}
               sequence={currentSequence}

@@ -74,3 +74,19 @@
       @apply bg-background text-foreground;
     }
   }
+
+  @keyframes zoomInOut {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  .zoom-in-out {
+    animation: zoomInOut 0.3s ease-in-out;
+  }
