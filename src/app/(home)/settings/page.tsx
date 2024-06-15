@@ -4,15 +4,7 @@ import React from "react";
 import { useAudio } from "@/context/AudioContext";
 
 export default function SettingsPage() {
-  const {
-    isSoundEnabled,
-    isEffectsEnabled,
-    volume,
-    toggleSound,
-    toggleEffects,
-    setVolume,
-  } = useAudio();
-
+  const { isEffectsEnabled, volume, toggleEffects, setVolume } = useAudio();
 
   return (
     <div className="bg-zinc-800 w-full py-8 rounded-lg">
@@ -23,22 +15,11 @@ export default function SettingsPage() {
         <h1 className="text-lg text-white text-center">
           Configurações dos sons do jogo
         </h1>
-        <div className="flex items-center justify-between mt-6 space-y-6">
+        <div className="flex flex-col items-center justify-center mt-6 space-y-6">
           <div className="bg-zinc-950 p-6 rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold text-[#ff3434]">Sound</h2>
-            <label className="flex items-center mt-2">
-              <input
-                type="checkbox"
-                checked={isSoundEnabled}
-                onChange={toggleSound}
-                className="form-checkbox h-5 w-5 text-blue-600"
-              />
-              <span className="ml-2 text-lg text-zinc-500">Enable Sound</span>
-            </label>
-          </div>
-
-          <div className="bg-zinc-950 p-6 rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold text-[#ff3434]">Sound Effects</h2>
+            <h2 className="text-2xl font-bold text-[#ff3434]">
+              Efeitos Sonoros
+            </h2>
             <label className="flex items-center mt-2">
               <input
                 type="checkbox"
@@ -47,7 +28,7 @@ export default function SettingsPage() {
                 className="form-checkbox h-5 w-5 text-blue-600"
               />
               <span className="ml-2 text-lg text-zinc-500">
-                Enable Sound Effects
+                Habilitar Efeitos
               </span>
             </label>
           </div>
