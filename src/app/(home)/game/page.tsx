@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { useCallback, useEffect, useState } from "react";
 import { useAudio } from "@/context/AudioContext";
 import { GameOverMessage } from "@/components/game-over-message";
+import { generateSequence } from "@/helpers/generate-sequence";
 
 export default function Game() {
   const [started, setStarted] = useState<boolean>(false);
@@ -57,16 +58,6 @@ export default function Game() {
 
   const resetGame = () => {
     setGameOver(false);
-  };
-
-  const generateSequence = () => {
-    const letters = "abcdefghijklmnopqrstuvwxyzç";
-    let sequence = [];
-    for (let i = 0; i < 6; i++) {
-      const randomIndex = Math.floor(Math.random() * letters.length);
-      sequence.push(letters[randomIndex]);
-    }
-    return sequence;
   };
 
   const handleKeyPress = useCallback(
