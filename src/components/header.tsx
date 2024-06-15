@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import menu from "@/assets/svg/menu.svg";
-import cancel from "@/assets/svg/cancel.svg";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,8 +9,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
 
 export function Header() {
   return (
@@ -32,9 +29,13 @@ export function Header() {
         <DropdownMenuContent className="bg-[#111111]/30 border-[#ff3434] text-white">
           <DropdownMenuLabel>MENU</DropdownMenuLabel>
           <DropdownMenuSeparator className="bg-[#ff3434]" />
-          <DropdownMenuItem>Regras</DropdownMenuItem>
+          <Link href={"/rules"}>
+            <DropdownMenuItem>Regras</DropdownMenuItem>
+          </Link>
           <DropdownMenuItem>Ranking</DropdownMenuItem>
-          <DropdownMenuItem>Configurações</DropdownMenuItem>
+          <Link href={"/settings"}>
+            <DropdownMenuItem>Configurações</DropdownMenuItem>
+          </Link>
         </DropdownMenuContent>
       </DropdownMenu>
     </nav>

@@ -7,6 +7,7 @@ import { Keys } from "@/components/keys";
 import { CountDownTimer } from "@/components/countdown-timer";
 import { Button } from "@/components/ui/button";
 import { useCallback, useEffect, useState } from "react";
+import { useAudio } from "@/context/AudioContext";
 
 export default function Game() {
   const [started, setStarted] = useState<boolean>(false);
@@ -17,8 +18,11 @@ export default function Game() {
   const [combo, setCombo] = useState<number>(0);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [currentSequence, setCurrentSequence] = useState<string[]>([]);
+  const [userInput, setUserInput] = useState<string[]>([]);
   const [gameOverMessage, setGameOverMessage] = useState<string>("");
   const [hasError, setHasError] = useState<boolean>(false);
+
+  const { playCorrectSound, playWrongSound } = useAudio();
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -38,6 +42,7 @@ export default function Game() {
     setTimeLeft(60);
     setCurrentIndex(0);
     setCurrentSequence(generateSequence());
+    setUserInput([]);
     setGameOverMessage("");
     setHasError(false);
     setStarted(true);
@@ -70,21 +75,25 @@ export default function Game() {
   const handleKeyPress = useCallback(
     (event: KeyboardEvent) => {
       const keyPressed = event.key.toLowerCase();
-      if (keyPressed === currentSequence[currentIndex]) {
-        setScore((prevScore) => prevScore + 25);
+      if (currentSequence[userInput.length] === keyPressed) {
+        setUserInput([...userInput, keyPressed]);
+        setScore((prevScore) => prevScore + 25 + Math.floor(combo / 10) * 5);
         setCombo((prevCombo) => prevCombo + 1);
+        playCorrectSound();
         setCurrentIndex((prevIndex) => prevIndex + 1);
         setHasError(false);
-        if (currentIndex >= currentSequence.length - 1) {
+        if (userInput.length + 1 === currentSequence.length) {
+          setUserInput([]);
           setCurrentSequence(generateSequence());
           setCurrentIndex(0);
         }
       } else {
+        playWrongSound();
         setHasError(true);
         endGame("You pressed the wrong key! ");
       }
     },
-    [currentSequence, currentIndex]
+    [currentSequence, currentIndex, userInput, combo, playCorrectSound, playWrongSound]
   );
 
   useEffect(() => {
@@ -120,6 +129,13 @@ export default function Game() {
             sequence={currentSequence}
           />
           <CountDownTimer timeLeft={timeLeft} />
+          <Button
+            onClick={startGame}
+            size={"sm"}
+            className="bg-[#ff3434]"
+          >
+            Começar Novamente
+          </Button>
         </>
       ) : gameOver ? (
         <>
