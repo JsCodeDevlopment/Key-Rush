@@ -32,7 +32,9 @@ export function Header() {
           <Link href={"/rules"}>
             <DropdownMenuItem>Regras</DropdownMenuItem>
           </Link>
-          <DropdownMenuItem>Ranking</DropdownMenuItem>
+          <Link href={"/rankings"}>
+            <DropdownMenuItem>Ranking</DropdownMenuItem>
+          </Link>
           <Link href={"/settings"}>
             <DropdownMenuItem>Configurações</DropdownMenuItem>
           </Link>

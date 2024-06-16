@@ -5,9 +5,9 @@ export default function Rules() {
         <h1 className="text-3xl font-extrabold text-[#ff3434] text-center">
           Regras do Jogo
         </h1>
-        <h1 className="text-lg text-white text-center">
+        <p className="text-lg text-white text-center">
           Regras e objetivos do Jogo
-        </h1>
+        </p>
         <div className="mt-6">
           <h2 className="text-2xl font-bold text-[#ff3434]">Objetivo</h2>
           <p className="mt-2 text-lg text-zinc-500">
@@ -34,13 +34,17 @@ export default function Rules() {
           <h2 className="text-2xl font-bold text-[#ff3434] mt-6">Pontuação</h2>
           <ul className="mt-2 text-lg text-zinc-500 list-disc list-inside">
             <li>Tecla pressionada corretamente: 25 pontos e 1 combo.</li>
-            <li>Sequências de 10 combos irão adicionar +5 de pontuação extra.</li>
+            <li>
+              Sequências de 10 combos irão adicionar +5 de pontuação extra.
+            </li>
             <li>Tecla pressionada errada: Fim de jogo.</li>
           </ul>
 
           <h2 className="text-2xl font-bold text-[#ff3434] mt-6">Dicas</h2>
           <ul className="mt-2 text-lg text-zinc-500 list-disc list-inside">
-            <li>Mantenha o foco e tente lembrar da sequência assim que olhar.</li>
+            <li>
+              Mantenha o foco e tente lembrar da sequência assim que olhar.
+            </li>
             <li>
               Pratique para melhorar sua velocidade e precisão na digitação.
             </li>

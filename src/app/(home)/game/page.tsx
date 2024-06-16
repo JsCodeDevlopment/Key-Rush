@@ -10,8 +10,15 @@ import { useCallback, useEffect, useState } from "react";
 import { useAudio } from "@/context/AudioContext";
 import { GameOverMessage } from "@/components/game-over-message";
 import { generateSequence } from "@/helpers/generate-sequence";
+import { useCharacter } from "@/hooks/use-characters";
 
-export default function Game() {
+interface GameProps {
+  searchParams: {
+    charId: number;
+  };
+}
+
+export default function Game({ searchParams }: GameProps) {
   const [started, setStarted] = useState<boolean>(false);
   const [gameOver, setGameOver] = useState<boolean>(false);
 
@@ -24,6 +31,7 @@ export default function Game() {
   const [hasError, setHasError] = useState<boolean>(false);
 
   const { playCorrectSound, playWrongSound } = useAudio();
+  const { addRanking } = useCharacter();
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -32,7 +40,7 @@ export default function Game() {
         setTimeLeft((prevTime) => prevTime - 1);
       }, 1000);
     } else if (timeLeft === 0) {
-      endGame("Time is up! ");
+      endGame();
     }
     return () => clearInterval(interval);
   }, [timeLeft, started]);
@@ -50,10 +58,14 @@ export default function Game() {
     window.addEventListener("keydown", handleKeyPress);
   };
 
-  const endGame = (message: string) => {
+  const endGame = () => {
     window.removeEventListener("keydown", handleKeyPress);
     setStarted(false);
     setGameOver(true);
+    addRanking(searchParams.charId, {
+      score,
+      combo,
+    });
   };
 
   const resetGame = () => {
@@ -78,7 +90,7 @@ export default function Game() {
       } else {
         playWrongSound();
         setHasError(true);
-        endGame("You pressed the wrong key! ");
+        endGame();
       }
     },
     [
