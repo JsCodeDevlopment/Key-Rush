@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<div align='center'>
+  <img src='https://cdn.discordapp.com/attachments/303213411544596481/1251699197737177148/key-rush-banner.png?ex=666f8738&is=666e35b8&hm=37ef38e25fac2f1d502c846212085933fa8eadfb35aeea81f2048dd26a3bae7e&' />
+</div>
 
-## Getting Started
+# Teste Técnico Cidade Alta - Key Rush
 
-First, run the development server:
+## 💬 Descrição
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Desafie seus reflexos e habilidades de digitação com Key Rush! Toque as teclas exibidas na tela o mais rápido que puder e veja se consegue alcançar o topo do placar. Key Rush é perfeito para quem quer melhorar sua velocidade de digitação e se divertir ao mesmo tempo.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🧠 Principais Funcionalidades
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+✔️ **Objetivo do game:** O objetivo é digitar a sequência de letras exibida o mais rápido possível dentro de 60 segundos. Cada letra correta lhe dá 25 pontos e adiciona 1 combo.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+ <div align="center">
+  <image src="https://cdn.discordapp.com/attachments/303213411544596481/1251700516593860628/image.png?ex=666f8872&is=666e36f2&hm=0e3f263b0783fe87df49881810449114af9de76cadbe85185abc8db95554b062&" />
+ </div>
 
-## Learn More
+## 💻 Tecnologias Utilizadas
 
-To learn more about Next.js, take a look at the following resources:
+ <div align="center">
+  <image src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" />
+  <image src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
+  <image src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" />
+  <image src="https://img.shields.io/badge/next%20js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" />
+  <image src="https://img.shields.io/badge/axios-671ddf?&style=for-the-badge&logo=axios&logoColor=white" />
+  <image src="https://img.shields.io/badge/shadcn%2Fui-000000?style=for-the-badge&logo=shadcnui&logoColor=white" />
+</div>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 👨‍💻 Desenvolvedores
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+| Foto                                                                                                                           | Nome                                                    | Cargo               |
+| ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------- | ------------------- |
+| <img src="https://avatars.githubusercontent.com/u/100796752?s=400&u=ae99bd456c6b274cd934d85a374a44340140e222&v=4" width="100"> | [Jonatas Silva](https://github.com/JsCodeDevlopment)    | FullStack Developer |
