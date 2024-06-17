@@ -122,7 +122,7 @@ export default function Game({ params: { id } }: GameProps) {
   }, [started, handleKeyPress]);
 
   return (
-    <section className="flex w-full flex-col gap-2 bg-zinc-800/30 border border-[#ff3434] p-5 rounded-lg items-center">
+    <section className="flex w-full relative flex-col gap-2 bg-zinc-800/30 border border-[#ff3434] p-5 rounded-lg items-center">
       <div className="flex flex-1 items-start w-full">
         <BackButton />
       </div>
@@ -138,9 +138,19 @@ export default function Game({ params: { id } }: GameProps) {
           ? "Aperte em começar e comece a fazer pontuações insanas."
           : "Se está pronto, então inicie e mostre que é bom de verdade."}
       </p>
+      {!started && !gameOver && (
+        <div className="flex h-full w-full absolute items-center justify-center">
+          <Button
+            onClick={startGame}
+            className="bg-[#ff3434] hover:scale-125 hover:bg-zinc-800 text-white animate-bounce text-lg"
+          >
+            COMEÇAR
+          </Button>
+        </div>
+      )}
       <div className="flex w-full gap-3 items-center justify-between max-lg:flex-col">
         <div className="flex flex-col items-center justify-center">
-          <p className="text-[#ff3434]">Personagem Escolhido</p>
+          <p className="text-[#ff3434] pb-1">Personagem Escolhido</p>
           <div className="flex flex-col h-48 w-32 items-center justify-between p-2 bg-[#ff3434] rounded-md">
             <Image
               src={
@@ -155,7 +165,9 @@ export default function Game({ params: { id } }: GameProps) {
               height={200}
               alt="character1"
             />
-            <p className="text-white">{character.name}</p>
+            <p className="text-white text-sm font-bold text-center capitalize">
+              {character.name}
+            </p>
           </div>
         </div>
         {started ? (
@@ -168,45 +180,42 @@ export default function Game({ params: { id } }: GameProps) {
                 sequence={currentSequence}
               />
               <CountDownTimer timeLeft={timeLeft} />
-              <Button onClick={startGame} size={"sm"} className="bg-[#ff3434]">
+              <Button
+                onClick={startGame}
+                size={"sm"}
+                className="bg-[#ff3434] hover:bg-zinc-800"
+              >
                 Começar Novamente
               </Button>
             </div>
             <Points combo={combo} points={score} />
           </>
-        ) : gameOver ? (
-          <>
-            <div className="flex flex-col gap-2 flex-1 items-center justify-center">
-              {hasError && (
-                <Keys
-                  userInput={userInput}
-                  currentIndex={currentIndex}
-                  hasError={hasError}
-                  sequence={currentSequence}
-                />
-              )}
-              <GameOverMessage
-                combo={combo}
-                hasError={hasError}
-                score={score}
-              />
-              <Button
-                onClick={resetGame}
-                className="bg-[#ff3434] hover:scale-125 animate-bounce text-lg"
-              >
-                JOGAR DE NOVO
-              </Button>
-            </div>
-          </>
         ) : (
-          <div className="flex h-full flex-1 items-center justify-center">
-            <Button
-              onClick={startGame}
-              className="bg-[#ff3434] hover:scale-125 text-white animate-bounce text-lg"
-            >
-              COMEÇAR
-            </Button>
-          </div>
+          gameOver && (
+            <>
+              <div className="flex flex-col gap-2 flex-1 items-center justify-center">
+                {hasError && (
+                  <Keys
+                    userInput={userInput}
+                    currentIndex={currentIndex}
+                    hasError={hasError}
+                    sequence={currentSequence}
+                  />
+                )}
+                <GameOverMessage
+                  combo={combo}
+                  hasError={hasError}
+                  score={score}
+                />
+                <Button
+                  onClick={resetGame}
+                  className="bg-[#ff3434] hover:bg-zinc-800 hover:scale-125 animate-bounce text-lg"
+                >
+                  JOGAR DE NOVO
+                </Button>
+              </div>
+            </>
+          )
         )}
       </div>
     </section>

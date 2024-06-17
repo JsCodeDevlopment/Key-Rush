@@ -40,7 +40,7 @@ export function CreatedCharacters() {
                 height={200}
                 alt="character1"
               />
-              <p className="text-white">{char.name}</p>
+              <p className="text-white text-sm font-bold text-center">{char.name}</p>
             </div>
           </Link>
         </>
