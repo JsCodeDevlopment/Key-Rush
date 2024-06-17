@@ -78,6 +78,7 @@ export function CreateCharacterForm() {
                 id="name"
                 className="text-black"
                 placeholder="Character Name"
+                maxLength={12}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
