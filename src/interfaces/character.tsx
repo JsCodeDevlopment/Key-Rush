@@ -9,5 +9,5 @@ export interface character {
   name: string;
   gender: string;
   pictureName: string;
-  record: playerRecords[]
+  records: playerRecords[]
 }

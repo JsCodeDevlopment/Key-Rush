@@ -34,9 +34,9 @@ const Ranking: React.FC = () => {
         {ranking.map((item, index) => (
           <li
             key={index}
-            className="flex items-center justify-center bg-zinc-950 p-4 mb-2 shadow-md rounded-lg"
+            className="flex items-center justify-center min-h-32 h-full bg-zinc-950 p-4 mb-2 shadow-md rounded-lg"
           >
-            <div className="flex flex-col items-center justify-center">
+            <div className="flex flex-col gap-1.5 items-center justify-center">
               <p className="text-xl text-white font-bold">{item.name}</p>
               <div className="bg-[#ff3434] rounded-md">
                 <Image
@@ -53,11 +53,12 @@ const Ranking: React.FC = () => {
                   alt="character1"
                 />
               </div>
-              <p className="text-zinc-500">Pontuação: {item.record[0].score}</p>
-              <p className="text-zinc-500">Combo: {item.record[0].combo}</p>
-              <p className="text-zinc-500">
-                Letras/s: {(item.record[0].combo / 60).toFixed(2)}
-              </p>
+              {item.records?.map((record) => (
+                <div key={record.id} className="flex flex-col w-full items-center justify-center">
+                  <p className="text-zinc-500 text-sm font-bold">Pontuação: {record.score}</p>
+                  <p className="text-zinc-500 font-bold text-sm">Combo: {record.combo}</p>
+                </div>
+              ))}
             </div>
           </li>
         ))}

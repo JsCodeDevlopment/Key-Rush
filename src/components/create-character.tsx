@@ -24,12 +24,29 @@ import female0 from "@/assets/images/characters/female0.png";
 
 import { useState } from "react";
 import { characterPictures } from "@/helpers/mocks/characters-pictures";
+import { useCharacter } from "@/hooks/use-characters";
+import { useRouter } from "next/navigation"
+
 
 export function CreateCharacterForm() {
   const [isMale, setIsMale] = useState<boolean>(false);
   const [options, setOptions] = useState<string>("");
+  const [name, setName] = useState<string>("");
 
   const { male, female } = characterPictures();
+  const { addCharacter } = useCharacter();
+  const router = useRouter();
+
+  const handleSubmit = async () => {
+    const gender = isMale ? "male" : "female";
+    const data = await addCharacter(name, options, gender);
+    if (data) {
+      setIsMale(false);
+      setOptions("");
+      setName("");
+      router.push(`/created-character`);
+    }
+  };
 
   return (
     <Card className="w-[350px] bg-[#111111] border-[#ff3434]">
@@ -57,7 +74,13 @@ export function CreateCharacterForm() {
             </div>
             <div>
               <Label htmlFor="name">Name</Label>
-              <Input id="name"  placeholder="Character Name" />
+              <Input
+                id="name"
+                className="text-black"
+                placeholder="Character Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
             </div>
             <div className="flex w-full items-center justify-between">
               <p>Tu é Homem?</p>
@@ -100,7 +123,9 @@ export function CreateCharacterForm() {
         </form>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button className="bg-[#ff3434] w-full">Salvar</Button>
+        <Button onClick={handleSubmit} className="bg-[#ff3434] w-full">
+          Salvar
+        </Button>
       </CardFooter>
     </Card>
   );
