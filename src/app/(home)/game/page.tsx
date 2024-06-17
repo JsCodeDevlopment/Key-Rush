@@ -43,7 +43,7 @@ export default function Game({ searchParams }: GameProps) {
       setCharacter(data);
     };
     fetchCharacters();
-  }, []);
+  }, [searchParams.charId]);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
