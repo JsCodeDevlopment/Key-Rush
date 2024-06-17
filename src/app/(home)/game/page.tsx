@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import male0 from "@/assets/images/characters/male0.png";
 import { Points } from "@/components/points";
 import { Keys } from "@/components/keys";
 import { CountDownTimer } from "@/components/countdown-timer";
@@ -11,6 +10,9 @@ import { useAudio } from "@/context/AudioContext";
 import { GameOverMessage } from "@/components/game-over-message";
 import { generateSequence } from "@/helpers/generate-sequence";
 import { useCharacter } from "@/hooks/use-characters";
+import { character } from "@/interfaces/character";
+import { characterPictures } from "@/helpers/mocks/characters-pictures";
+import { BackButton } from "@/components/back-button";
 
 interface GameProps {
   searchParams: {
@@ -29,9 +31,19 @@ export default function Game({ searchParams }: GameProps) {
   const [currentSequence, setCurrentSequence] = useState<string[]>([]);
   const [userInput, setUserInput] = useState<string[]>([]);
   const [hasError, setHasError] = useState<boolean>(false);
+  const [character, setCharacter] = useState<character>({} as character);
 
   const { playCorrectSound, playWrongSound } = useAudio();
-  const { addRanking } = useCharacter();
+  const { addRanking, characterById } = useCharacter();
+  const { male, female } = characterPictures();
+
+  useEffect(() => {
+    const fetchCharacters = async () => {
+      const data = await characterById(searchParams.charId);
+      setCharacter(data);
+    };
+    fetchCharacters();
+  }, []);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -62,10 +74,7 @@ export default function Game({ searchParams }: GameProps) {
     window.removeEventListener("keydown", handleKeyPress);
     setStarted(false);
     setGameOver(true);
-    addRanking(searchParams.charId, {
-      score,
-      combo,
-    });
+    addRanking(searchParams.charId, combo, score);
   };
 
   const resetGame = () => {
@@ -114,6 +123,9 @@ export default function Game({ searchParams }: GameProps) {
 
   return (
     <section className="flex w-full flex-col gap-2 bg-zinc-800/30 border border-[#ff3434] p-5 rounded-lg items-center">
+      <div className="flex flex-1 items-start w-full">
+        <BackButton />
+      </div>
       <h1 className="text-[#ff3434] text-3xl font-bold">
         {!started
           ? "HORA DA VERDADE!"
@@ -131,13 +143,19 @@ export default function Game({ searchParams }: GameProps) {
           <p className="text-[#ff3434]">Personagem Escolhido</p>
           <div className="flex flex-col h-48 w-32 items-center justify-between p-2 bg-[#ff3434] rounded-md">
             <Image
-              src={male0}
+              src={
+                character.gender === "male"
+                  ? male.find((m) => m.title === character.pictureName)
+                      ?.picture ?? ""
+                  : female.find((m) => m.title === character.pictureName)
+                      ?.picture ?? ""
+              }
               className="w-36"
               width={200}
               height={200}
               alt="character1"
             />
-            <p className="text-white">Fire Hands</p>
+            <p className="text-white">{character.name}</p>
           </div>
         </div>
         {started ? (
