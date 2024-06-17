@@ -15,12 +15,12 @@ import { characterPictures } from "@/helpers/mocks/characters-pictures";
 import { BackButton } from "@/components/back-button";
 
 interface GameProps {
-  searchParams: {
-    charId: number;
+  params: {
+    id: number;
   };
 }
 
-export default function Game({ searchParams }: GameProps) {
+export default function Game({ params: { id } }: GameProps) {
   const [started, setStarted] = useState<boolean>(false);
   const [gameOver, setGameOver] = useState<boolean>(false);
 
@@ -39,11 +39,11 @@ export default function Game({ searchParams }: GameProps) {
 
   useEffect(() => {
     const fetchCharacters = async () => {
-      const data = await characterById(searchParams.charId);
+      const data = await characterById(id);
       setCharacter(data);
     };
     fetchCharacters();
-  }, [searchParams.charId]);
+  }, [id]);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -74,7 +74,7 @@ export default function Game({ searchParams }: GameProps) {
     window.removeEventListener("keydown", handleKeyPress);
     setStarted(false);
     setGameOver(true);
-    addRanking(searchParams.charId, combo, score);
+    addRanking(id, combo, score);
   };
 
   const resetGame = () => {

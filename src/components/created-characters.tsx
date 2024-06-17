@@ -25,7 +25,7 @@ export function CreatedCharacters() {
     <>
       {character.map((char) => (
         <>
-          <Link key={char.id} href={`/game?charId=${char.id}`}>
+          <Link key={char.id} href={`/game/${char.id}`}>
             <div className="flex flex-col h-48 w-32 items-center justify-between p-2 bg-[#ff3434] rounded-md">
               <Image
                 src={
