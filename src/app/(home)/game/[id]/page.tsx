@@ -32,6 +32,10 @@ export default function Game({ params: { id } }: GameProps) {
   const [userInput, setUserInput] = useState<string[]>([]);
   const [hasError, setHasError] = useState<boolean>(false);
   const [character, setCharacter] = useState<character>({} as character);
+  const [playerRecord, setPlayerRecord] = useState<{
+    score: number;
+    combo: number;
+  }>({ score: 0, combo: 0 });
 
   const { playCorrectSound, playWrongSound } = useAudio();
   const { addRanking, characterById } = useCharacter();
@@ -41,6 +45,18 @@ export default function Game({ params: { id } }: GameProps) {
     const fetchCharacters = async () => {
       const data = await characterById(id);
       setCharacter(data);
+      const highestScore = Math.max(
+        ...data.records.map((record) => record.score)
+      );
+      const highestScoreRecord = data.records.find(
+        (record) => record.score === highestScore
+      );
+      if (highestScoreRecord) {
+        setPlayerRecord({
+          score: highestScoreRecord.score,
+          combo: highestScoreRecord.combo,
+        });
+      }
     };
     fetchCharacters();
   }, [id]);
@@ -188,7 +204,12 @@ export default function Game({ params: { id } }: GameProps) {
                 Começar Novamente
               </Button>
             </div>
-            <Points combo={combo} points={score} />
+            <Points
+              combo={combo}
+              points={score}
+              highestCombo={playerRecord.combo}
+              highestScore={playerRecord.score}
+            />
           </>
         ) : (
           gameOver && (

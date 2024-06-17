@@ -1,9 +1,11 @@
 interface PointsProps {
   points: number;
   combo: number;
+  highestScore: number;
+  highestCombo: number;
 }
 
-export function Points({ points, combo }: PointsProps) {
+export function Points({ points, combo, highestScore, highestCombo }: PointsProps) {
   return (
     <div className="flex flex-col gap-3 w-64 bg-zinc-950 p-3 border border-[#ff3434]">
       <div className="flex flex-col p-2 bg-[#111111] text-white">
@@ -12,11 +14,11 @@ export function Points({ points, combo }: PointsProps) {
         </div>
         <p className="text-sm">
           Maior Combo:{" "}
-          <span className="text-lg text-[#ff3434] font-black">30x</span>
+          <span className="text-lg text-[#ff3434] font-black">{highestCombo}x</span>
         </p>
         <p className="text-sm">
           Maior Pontuação:{" "}
-          <span className="text-lg text-[#ff3434] font-black">750pts</span>
+          <span className="text-lg text-[#ff3434] font-black">{highestScore}pts</span>
         </p>
       </div>
       <div className="flex flex-col items-center justify-center p-2 bg-[#111111] text-white">
