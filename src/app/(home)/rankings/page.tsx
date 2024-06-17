@@ -34,7 +34,7 @@ const Ranking: React.FC = () => {
         {ranking.map((item, index) => (
           <li
             key={index}
-            className="flex items-center justify-center min-h-32 h-full bg-zinc-950 p-4 mb-2 shadow-md rounded-lg"
+            className="flex items-center justify-center min-h-32 bg-zinc-950 p-4 mb-2 shadow-md rounded-lg"
           >
             <div className="flex flex-col gap-1.5 items-center justify-center">
               <p className="text-xl text-white font-bold">{item.name}</p>
