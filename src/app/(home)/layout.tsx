@@ -7,12 +7,12 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className="flex flex-col relative pb-2 bg-[#111111] bg-hero bg-contain bg-center bg-no-repeat bg-blend-overlay w-full min-h-screen">
+    <div className="flex flex-col relative bg-zinc-950 w-full min-h-screen">
       <Header />
-      <section className="flex flex-1 p-20">
+      <div className="flex-1 flex flex-col pt-4 md:pt-0">
         {children}
-      </section>
+      </div>
       <Footer />
-    </main>
+    </div>
   );
 }

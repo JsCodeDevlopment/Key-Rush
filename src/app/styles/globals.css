@@ -90,3 +90,70 @@
   .zoom-in-out {
     animation: zoomInOut 0.3s ease-in-out;
   }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.8s ease-out forwards;
+  }
+
+  .animate-bounce-slow {
+    animation: bounce 4s ease-in-out infinite;
+  }
+
+  .animate-bounce-slow-delayed {
+    animation: bounce 4s ease-in-out 1.5s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .bg-grid-white\/\[0\.03\] {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='white' stroke-opacity='0.1'%3E%3Cpath d='M0 .5H31.5V32'/%3E%3C/svg%3E");
+  }
+
+  .glow-text-red {
+    text-shadow: 0 0 20px rgba(255, 52, 52, 0.5), 0 0 40px rgba(255, 52, 52, 0.3);
+  }
+
+  .corner-accent {
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .corner-accent::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 10px;
+    height: 10px;
+    border-top: 2px solid #ff3434;
+    border-left: 2px solid #ff3434;
+  }
+
+  .corner-accent::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    right: -1px;
+    width: 10px;
+    height: 10px;
+    border-bottom: 2px solid #ff3434;
+    border-right: 2px solid #ff3434;
+  }
+
