@@ -1,3 +1,4 @@
+import { useCallback, useMemo } from "react";
 import { character } from "@/interfaces/character";
 import axios from "axios";
 import { toast } from "sonner";
@@ -11,9 +12,7 @@ interface useCharacter {
 }
 
 export function useCharacter(): useCharacter {
-  const api = axios.create({ baseURL: process.env.NEXT_PUBLIC_BASE_URL });
-
-  const characters = async () => {
+  const characters = useCallback(async () => {
     const response = await fetch('/api/characters');
     if (!response.ok) {
       throw new Error('Failed to fetch characters');
@@ -21,9 +20,9 @@ export function useCharacter(): useCharacter {
   
     const data = await response.json();
     return data;
-  };
+  }, []);
 
-  const characterById = async (id: number) => {
+  const characterById = useCallback(async (id: number) => {
     const response = await fetch(`/api/characters/${id}`);
     if (!response.ok) {
       throw new Error('Failed to fetch character');
@@ -31,9 +30,9 @@ export function useCharacter(): useCharacter {
   
     const data: character = await response.json();
     return data;
-  };
+  }, []);
 
-  const addCharacter = async (name: string, pictureName: string, gender: string) => {
+  const addCharacter = useCallback(async (name: string, pictureName: string, gender: string) => {
     const response = await fetch('/api/characters', {
       method: 'POST',
       headers: {
@@ -49,9 +48,9 @@ export function useCharacter(): useCharacter {
     const data: character = await response.json();
     toast.success('Character created successfully');
     return data;
-  };
+  }, []);
 
-  const rankings = async () => {
+  const rankings = useCallback(async () => {
     const response = await fetch('/api/rankings');
     if (!response.ok) {
       throw new Error('Failed to fetch characters');
@@ -59,9 +58,9 @@ export function useCharacter(): useCharacter {
   
     const data = await response.json();
     return data;
-  };
+  }, []);
 
-  const addRanking = async (characterId: number, combo: number, score: number) => {
+  const addRanking = useCallback(async (characterId: number, combo: number, score: number) => {
     const response = await fetch(`/api/characters/${characterId}`, {
       method: 'POST',
       headers: {
@@ -76,7 +75,9 @@ export function useCharacter(): useCharacter {
   
     const data = await response.json();
     return data;
-  };
+  }, []);
 
-  return { characters, addRanking, characterById, addCharacter, rankings };
+  return useMemo(() => ({
+    characters, addRanking, characterById, addCharacter, rankings
+  }), [characters, addRanking, characterById, addCharacter, rankings]);
 }

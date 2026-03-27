@@ -1,3 +1,4 @@
+import { useCallback, useMemo } from "react";
 import { character } from "@/interfaces/character";
 import { toast } from "sonner";
 
@@ -49,14 +50,14 @@ const MOCK_CHARACTERS: character[] = [
 
 export function useMockGame(): UseMockGame {
   
-  const characters = async (): Promise<character[]> => {
+  const characters = useCallback(async (): Promise<character[]> => {
     console.log("[Mock] Fetching characters...");
     return new Promise((resolve) => {
       setTimeout(() => resolve(MOCK_CHARACTERS), 500);
     });
-  };
+  }, []);
 
-  const characterById = async (id: number): Promise<character> => {
+  const characterById = useCallback(async (id: number): Promise<character> => {
     console.log(`[Mock] Fetching character ${id}...`);
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -65,9 +66,9 @@ export function useMockGame(): UseMockGame {
         else reject(new Error("Character not found"));
       }, 500);
     });
-  };
+  }, []);
 
-  const addCharacter = async (name: string, pictureName: string, gender: string): Promise<character> => {
+  const addCharacter = useCallback(async (name: string, pictureName: string, gender: string): Promise<character> => {
     console.log(`[Mock] Adding character: ${name}...`);
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -82,13 +83,12 @@ export function useMockGame(): UseMockGame {
         resolve(newChar);
       }, 800);
     });
-  };
+  }, []);
 
-  const rankings = async (): Promise<any[]> => {
+  const rankings = useCallback(async (): Promise<any[]> => {
     console.log("[Mock] Fetching rankings...");
     return new Promise((resolve) => {
       setTimeout(() => {
-        // Flatten records with character info
         const allRankings = MOCK_CHARACTERS.flatMap(char => 
           char.records.map(rec => ({
             ...rec,
@@ -101,9 +101,9 @@ export function useMockGame(): UseMockGame {
         resolve(allRankings);
       }, 600);
     });
-  };
+  }, []);
 
-  const addRanking = async (characterId: number, combo: number, score: number): Promise<any> => {
+  const addRanking = useCallback(async (characterId: number, combo: number, score: number): Promise<any> => {
     console.log(`[Mock] Adding ranking for ${characterId}: Combo ${combo}, Score ${score}`);
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -111,7 +111,10 @@ export function useMockGame(): UseMockGame {
         resolve({ success: true, id: Math.random() });
       }, 700);
     });
-  };
+  }, []);
 
-  return { characters, addRanking, characterById, addCharacter, rankings };
+  return useMemo(() => ({
+    characters, addRanking, characterById, addCharacter, rankings
+  }), [characters, addRanking, characterById, addCharacter, rankings]);
 }
+
