@@ -24,110 +24,127 @@ import female0 from "@/assets/images/characters/female0.png";
 
 import { useState } from "react";
 import { characterPictures } from "@/helpers/mocks/characters-pictures";
-import { useCharacter } from "@/hooks/use-characters";
+import { useGame } from "@/hooks/game-hook";
 import { useRouter } from "next/navigation"
 
 
 export function CreateCharacterForm() {
-  const [isMale, setIsMale] = useState<boolean>(false);
+  const [isMale, setIsMale] = useState<boolean>(true); // Default to true
   const [options, setOptions] = useState<string>("");
   const [name, setName] = useState<string>("");
 
   const { male, female } = characterPictures();
-  const { addCharacter } = useCharacter();
+  const { addCharacter } = useGame();
   const router = useRouter();
 
+  const currentPreview = isMale
+    ? male.find((m) => m.title === options)?.picture ?? male[0].picture
+    : female.find((m) => m.title === options)?.picture ?? female[0].picture;
+
   const handleSubmit = async () => {
+    if (!name || !options) return;
     const gender = isMale ? "male" : "female";
     const data = await addCharacter(name, options, gender);
     if (data) {
-      setIsMale(false);
-      setOptions("");
-      setName("");
       router.push(`/created-character`);
     }
   };
 
   return (
-    <Card className="w-[350px] bg-[#111111] border-[#ff3434]">
-      <CardHeader>
-        <CardDescription className="text-zinc-500">
-          Crie um personagem que lhe represente em sua jogatina.
+    <Card className="w-[450px] bg-zinc-950 border-zinc-900 rounded-2xl overflow-hidden shadow-2xl relative">
+      <div className="absolute inset-0 bg-grid-white/[0.02] pointer-events-none" />
+      
+      <CardHeader className="relative z-10 border-b border-zinc-900 pb-8">
+        <div className="flex items-center gap-3 mb-2">
+            <div className="w-1 h-3 bg-[#ff3434]" />
+            <h2 className="text-white text-xl font-black uppercase tracking-widest">Identidade Operacional</h2>
+        </div>
+        <CardDescription className="text-zinc-500 font-medium tracking-tight">
+          Sincronize sua conta com um novo avatar de desempenho.
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <form className="text-white">
-          <div className="grid w-full items-center gap-4">
-            <div className="flex flex-col items-center justify-center h-32 w-full p-2 bg-[#ff3434] rounded-md">
-              <Image
-                src={
-                  isMale
-                    ? male.find((m) => m.title === options)?.picture ?? male0
-                    : female.find((m) => m.title === options)?.picture ??
-                      female0
-                }
-                className="w-24"
-                width={200}
-                height={200}
-                alt="character1"
-              />
+
+      <CardContent className="relative z-10 space-y-8 pt-8">
+        {/* Preview & Selection Container */}
+        <div className="flex items-center gap-8">
+            {/* Character Frame */}
+            <div className="relative group">
+                <div className="absolute -inset-1 bg-[#ff3434]/20 blur-md rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="relative w-32 h-32 bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden corner-accent flex items-center justify-center p-2">
+                    <Image
+                        src={currentPreview}
+                        className="w-full h-full object-contain animate-float"
+                        width={200}
+                        height={200}
+                        alt="Preview"
+                    />
+                </div>
             </div>
-            <div>
-              <Label htmlFor="name">Name</Label>
-              <Input
-                id="name"
-                className="text-black"
-                placeholder="Character Name"
-                maxLength={12}
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
+
+            {/* Gender Switch */}
+            <div className="flex-1 space-y-4">
+                <p className="text-zinc-600 text-[10px] font-black uppercase tracking-[0.2em]">Série de Gênero</p>
+                <div className="flex p-1 bg-zinc-900 border border-zinc-800 rounded-lg">
+                    <button 
+                        onClick={() => setIsMale(true)}
+                        className={`flex-1 py-2 text-[10px] font-black uppercase tracking-widest rounded-md transition-all ${isMale ? 'bg-[#ff3434] text-white' : 'text-zinc-500 hover:text-white'}`}
+                    >
+                        MASC
+                    </button>
+                    <button 
+                        onClick={() => setIsMale(false)}
+                        className={`flex-1 py-2 text-[10px] font-black uppercase tracking-widest rounded-md transition-all ${!isMale ? 'bg-[#ff3434] text-white' : 'text-zinc-500 hover:text-white'}`}
+                    >
+                        FEM
+                    </button>
+                </div>
             </div>
-            <div className="flex w-full items-center justify-between">
-              <p>Tu é Homem?</p>
-              <input
-                type="checkbox"
-                className="bg-[#ff3434]"
-                onClick={() => setIsMale(!isMale)}
-              />
-            </div>
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="framework">ícone de Perfil</Label>
-              <select
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#ff3434] focus:border-[#ff3434] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#ff3434] dark:focus:border-[#ff3434]"
-                onChange={(e) => setOptions(e.target.value)}
-              >
-                <option disabled selected value="">
-                  Escolha um ícone
-                </option>
-                <option value={isMale ? male[0].title : female[0].title}>
-                  Opção 1
-                </option>
-                <option value={isMale ? male[1].title : female[1].title}>
-                  Opção 2
-                </option>
-                <option value={isMale ? male[2].title : female[2].title}>
-                  Opção 3
-                </option>
-                <option value={isMale ? male[3].title : female[3].title}>
-                  Opção 4
-                </option>
-                <option value={isMale ? male[4].title : female[4].title}>
-                  Opção 5
-                </option>
-                <option value={isMale ? male[5].title : female[5].title}>
-                  Opção 6
-                </option>
-              </select>
-            </div>
+        </div>
+
+        {/* Inputs */}
+        <div className="space-y-6">
+          <div className="space-y-2">
+            <Label htmlFor="name" className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.2em]">Codinome (Max 12 chars)</Label>
+            <Input
+              id="name"
+              className="bg-zinc-900/50 border-zinc-800 text-white font-bold h-12 focus:border-[#ff3434] transition-all rounded-lg placeholder:text-zinc-700"
+              placeholder="Digite seu nome..."
+              maxLength={12}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
           </div>
-        </form>
+
+          <div className="space-y-2">
+            <Label htmlFor="icon" className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.2em]">Versão de Perfil</Label>
+            <select
+              id="icon"
+              className="w-full bg-zinc-900 border border-zinc-800 text-white text-sm rounded-lg focus:ring-[#ff3434] focus:border-[#ff3434] block p-3 appearance-none cursor-pointer outline-none transition-all font-bold"
+              onChange={(e) => setOptions(e.target.value)}
+              value={options}
+            >
+              <option value="" disabled>Escolha um modelo visual</option>
+              {(isMale ? male : female).map((char, index) => (
+                <option key={index} value={char.title} className="bg-zinc-950">
+                  Modelo 0{index + 1}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
       </CardContent>
-      <CardFooter className="flex justify-between">
-        <Button onClick={handleSubmit} className="bg-[#ff3434] w-full">
-          Salvar
+
+      <CardFooter className="relative z-10 pt-4 pb-8">
+        <Button 
+            onClick={handleSubmit} 
+            size="xl"
+            disabled={!name || !options}
+            className="w-full bg-[#ff3434] hover:bg-white text-white hover:text-black font-black uppercase tracking-widest rounded-none h-14 corner-accent transition-all animate-fade-in disabled:opacity-30 disabled:grayscale"
+        >
+          Sincronizar Operador
         </Button>
       </CardFooter>
     </Card>
   );
 }
+

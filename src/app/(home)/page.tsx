@@ -1,4 +1,3 @@
-import image from "@/assets/images/letter.png";
 import { GameFeatures } from "@/components/game-features";
 import { Button } from "@/components/ui/button";
 import { MoveRight } from "lucide-react";
@@ -57,7 +56,7 @@ export default function Home() {
                 </Link>
                 <Link href="/rules">
                   <Button
-                    variant="outline"
+                    variant="secondary"
                     size="xl"
                     className="border-zinc-800 bg-transparent hover:bg-zinc-900 text-zinc-300 h-16 px-10 text-xl font-bold rounded-none corner-accent"
                   >
@@ -93,7 +92,7 @@ export default function Home() {
 
               <div className="relative z-10 p-2 corner-accent bg-zinc-900/10 backdrop-blur-[2px]">
                 <Image
-                  src={image}
+                  src="/dash.png"
                   className="w-full max-w-[550px] h-auto object-contain drop-shadow-[0_40px_80px_rgba(255,52,52,0.15)] mx-auto hover:rotate-2 transition-transform duration-700"
                   alt="Key Rush Combat Frame"
                   width={800}

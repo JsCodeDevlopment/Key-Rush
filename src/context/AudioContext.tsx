@@ -24,14 +24,20 @@ const wrongSound = new Howl({
 
 export function AudioProvider({ children }: { children: ReactNode }) {
   const [isEffectsEnabled, setIsEffectsEnabled] = useState(true);
-  const [volume, setVolume] = useState(1);
+  const [volume, setVolume] = useState(0.8); // Default 80%
+
+  // Update Howler volume when state changes
+  React.useEffect(() => {
+    correctSound.volume(volume);
+    wrongSound.volume(volume);
+  }, [volume]);
 
   const toggleEffects = () => {
     setIsEffectsEnabled(!isEffectsEnabled);
   };
 
   const handleSetVolume = (newVolume: number) => {
-    setVolume(newVolume / 100); // Convert percentage to decimal
+    setVolume(newVolume / 100); // Expects 0-100 percentage
   };
 
   const playCorrectSound = () => {
@@ -61,6 +67,7 @@ export function AudioProvider({ children }: { children: ReactNode }) {
     </AudioContext.Provider>
   );
 }
+
 
 export const useAudio = () => {
   const context = useContext(AudioContext);
