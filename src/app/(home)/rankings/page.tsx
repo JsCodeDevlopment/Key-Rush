@@ -79,7 +79,7 @@ const Ranking: React.FC = () => {
                             </div>
                             <div className="text-center">
                                 <h3 className="text-white font-black uppercase text-xl italic tracking-tighter">{top3[1].characterName}</h3>
-                                <p className="text-zinc-500 font-mono text-sm">{top3[1].score.toLocaleString()} PTS</p>
+                                <p className="text-zinc-500 font-mono text-sm">{top3[1].score?.toLocaleString() ?? 0} PTS</p>
                             </div>
                         </div>
                     )}
@@ -106,7 +106,7 @@ const Ranking: React.FC = () => {
                                 </div>
                                 <h3 className="text-white font-black uppercase text-3xl italic tracking-tighter glow-text-red">{top3[0].characterName}</h3>
                                 <div className="flex items-center gap-4 justify-center mt-1">
-                                    <span className="text-[#ff3434] font-black font-mono text-lg">{top3[0].score.toLocaleString()} <span className="text-[10px]">PTS</span></span>
+                                    <span className="text-[#ff3434] font-black font-mono text-lg">{top3[0].score?.toLocaleString() ?? 0} <span className="text-[10px]">PTS</span></span>
                                     <span className="w-1 h-1 bg-zinc-800 rounded-full" />
                                     <span className="text-white/40 font-black font-mono text-sm">x{top3[0].combo}</span>
                                 </div>
@@ -131,7 +131,7 @@ const Ranking: React.FC = () => {
                             </div>
                             <div className="text-center">
                                 <h3 className="text-white font-black uppercase text-xl italic tracking-tighter">{top3[2].characterName}</h3>
-                                <p className="text-zinc-500 font-mono text-sm">{top3[2].score.toLocaleString()} PTS</p>
+                                <p className="text-zinc-500 font-mono text-sm">{top3[2].score?.toLocaleString() ?? 0} PTS</p>
                             </div>
                         </div>
                     )}
@@ -175,7 +175,7 @@ const Ranking: React.FC = () => {
                                 </div>
 
                                 <div className="flex flex-col items-end pr-4 justify-center">
-                                    <span className="text-white font-black font-mono text-lg">{item.score.toLocaleString()}</span>
+                                    <span className="text-white font-black font-mono text-lg">{item.score?.toLocaleString() ?? 0}</span>
                                     <div className="flex items-center gap-1">
                                         <Target className="w-2 h-2 text-zinc-800 group-hover:text-[#ff3434]" />
                                         <span className="text-[8px] text-zinc-700 font-black uppercase">Verified</span>

@@ -64,7 +64,7 @@ export function GameOverMessage({
             </div>
             <div className="text-center">
                 <p className="text-zinc-500 text-[8px] font-black uppercase mb-1 tracking-widest">Total Pontuação</p>
-                <p className="text-white text-3xl font-black italic tracking-tighter">{score.toLocaleString()}</p>
+                <p className="text-white text-3xl font-black italic tracking-tighter">{score?.toLocaleString() ?? 0}</p>
             </div>
         </div>
 

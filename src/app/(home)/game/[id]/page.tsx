@@ -244,7 +244,7 @@ export default function Game({ params: { id } }: GameProps) {
                     <div className="space-y-4 pt-4 px-2">
                         <div className="flex justify-between items-end border-b border-zinc-900 pb-3 hover:border-[#ff3434]/30 transition-colors">
                             <span className="text-zinc-600 text-[10px] font-black uppercase tracking-widest">Lifetime High</span>
-                            <span className="text-white font-mono font-bold text-lg">{playerRecord.score.toLocaleString()}</span>
+                            <span className="text-white font-mono font-bold text-lg">{playerRecord?.score?.toLocaleString() ?? 0}</span>
                         </div>
                         <div className="flex justify-between items-end border-b border-zinc-900 pb-3 hover:border-[#ff3434]/30 transition-colors">
                             <span className="text-zinc-600 text-[10px] font-black uppercase tracking-widest">Peak Combo</span>
